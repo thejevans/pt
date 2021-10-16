@@ -1,8 +1,6 @@
 #! /usr/bin/python3
 
 """Simple python script to get useful times to take photos"""
-from typing import Optional
-
 import argparse
 import enum
 import dataclasses
@@ -24,11 +22,11 @@ class Alt(enum.Enum):
 
 @dataclasses.dataclass
 class PhotoTimes():
-    night: Optional[tuple[str, str, str, str]] = None
-    twilight: Optional[tuple[str, str, str, str]] = None
-    blue_hour: Optional[tuple[str, str, str, str]] = None
-    golden_hour: Optional[tuple[str, str, str, str]] = None
-    high_noon: Optional[tuple[str, coord.angles.Angle]] = None
+    night: tuple = (None, None, None, None)
+    twilight: tuple = (None, None, None, None)
+    blue_hour: tuple = (None, None, None, None)
+    golden_hour: tuple = (None, None, None, None)
+    high_noon: tuple = (None, None)
 
 
 def main() -> None:
