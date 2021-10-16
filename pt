@@ -142,6 +142,8 @@ def print_photo_times(pt: PhotoTimes) -> None:
     ]
     max_name_length = max([len(name) for _,name,_ in iterator])
     for field, name, color in iterator:
+        if field[0] == None:
+            continue
         if isinstance(field[1], coord.angles.Angle):
             ending = f', {field[1]:.2f}'
         else:
