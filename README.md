@@ -10,12 +10,13 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -i INTERVAL, --interval INTERVAL
-                        time precision interval in minutes
+                        time precision interval in minutes. default = 1
   -f FORMAT, --format FORMAT
-                        time format string
+                        time format string. default = %H:%M
   -z TIME_ZONE_SHIFT_UTC, --time-zone-shift-utc TIME_ZONE_SHIFT_UTC
-                        hour shift from utc
+                        hour shift from utc. default = system time zone
 ```
+
 
 requires:
 `python >=3.8`

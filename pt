@@ -6,6 +6,7 @@ from typing import Optional
 import argparse
 import enum
 import dataclasses
+import time
 
 import numpy as np
 import astropy.coordinates as coord
@@ -46,6 +47,8 @@ def main() -> None:
 def parse_args() -> argparse.Namespace:
     """Returns arguments from command line"""
     parser = argparse.ArgumentParser()
+    time_zone = time.timezone if (time.localtime().tm_isdst == 0) else time.altzone
+    time_zone /= -3600
     parser.add_argument(
         'location',
         help='any string that the Google Geocoding API can resolve'
@@ -55,20 +58,20 @@ def parse_args() -> argparse.Namespace:
         '-i', '--interval',
         type=int,
         default=1,
-        help='time precision interval in minutes',
+        help='time precision interval in minutes. default = 1',
     )
 
     parser.add_argument(
         '-f', '--format',
         default='%H:%M',
-        help='time format string',
+        help='time format string. default = %%H:%%M',
     )
 
     parser.add_argument(
         '-z', '--time-zone-shift-utc',
         type=int,
-        default=0,
-        help='hour shift from utc',
+        default=int(time_zone),
+        help='hour shift from utc. default = system time zone',
     )
     return parser.parse_args()
 
