@@ -6,3 +6,5 @@ python >=3.8
 numpy
 astropy
 termcolor
+
+![alt text](https://github.com/thejevans/pt/blob/main/screenshot.png)
