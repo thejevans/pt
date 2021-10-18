@@ -32,11 +32,18 @@ class PhotoTimes():
 def main() -> None:
     """Called only when run as script."""
     args = parse_args()
+
+    if args.date == '':
+        date = at.Time.now()
+    else:
+        date = at.Time(args.date)
+
     times, alts = get_sun_alts(
         args.location,
         args.interval,
         args.format,
         args.time_zone_shift_utc,
+        date,
     )
     photo_times = get_photo_times(times, alts)
     print_photo_times(photo_times)
@@ -71,6 +78,12 @@ def parse_args() -> argparse.Namespace:
         default=int(time_zone),
         help='hour shift from utc. default = system time zone',
     )
+
+    parser.add_argument(
+        '-d', '--date',
+        default='',
+        help='date to calculate for. format = YYYY-MM-DD. default = today',
+    )
     return parser.parse_args()
 
 
@@ -79,9 +92,10 @@ def get_sun_alts(
     interval: int,
     time_format: str,
     time_zone_shift: int,
+    date: at.Time,
 ) -> tuple[np.ndarray, np.ndarray]:
     """Returns the sun altitudes at a range of times"""
-    today = int(at.Time.now().to_value('mjd')) - time_zone_shift / 24
+    today = int(date.to_value('mjd')) - time_zone_shift / 24
     loc = coord.EarthLocation.of_address(location)
     times = at.Time(np.arange(today, today + 1, interval / 60 / 24), format='mjd', location=loc)
     frames = coord.AltAz(obstime=times, location=loc)
@@ -97,7 +111,7 @@ def get_photo_times(times: np.ndarray, sun_alts: np.ndarray) -> PhotoTimes:
     max_idx = np.argmax(sun_alts)
 
     for bounds, bracket in iterator:
-        lo, hi = bounds.value[0], bounds.value[1]
+        lo, hi = bounds.value
         in_bracket = np.where((sun_alts > lo) & (sun_alts < hi))[0]
         if len(in_bracket) > 0:
             if in_bracket[0] > max_idx:
