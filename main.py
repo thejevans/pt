@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#!/usr/bin/env python3
 
 """Simple python script to get useful times to take photos"""
 import argparse

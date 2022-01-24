@@ -1,0 +1,5 @@
+numpy==1.22.1
+astropy==5.0
+termcolor==1.1.0
+dataclasses==0.6
+pex==2.1.63
